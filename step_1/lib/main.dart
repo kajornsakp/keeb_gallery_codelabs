@@ -28,47 +28,41 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<GalleryItemModel> models = [];
-
-  @override
-  void initState() {
-    models = fetchGalleryItem();
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffDBAC9A),
+      backgroundColor: Colors.white,
+      appBar: buildAppBar(),
       drawer: Drawer(
         child: Container(),
       ),
       body: SafeArea(
-        child: Container(
-          color: Colors.white,
-          child: CustomScrollView(
-            physics: ClampingScrollPhysics(),
-            slivers: [
-              SliverAppBar(
-                  elevation: 0,
-                  backgroundColor: Color(0xffDBAC9A),
-                  leading: Builder(
-                    builder: (context) => IconButton(
-                      icon: Image.asset(
-                        'assets/icon/menu.png',
-                        height: 18,
-                      ),
-                      onPressed: () {
-                        Scaffold.of(context).openDrawer();
-                      },
-                    ),
-                  )),
-              buildProfileSection(),
-              // _buildStaggeredList()
-            ],
-          ),
+        child: CustomScrollView(
+          slivers: [
+            buildProfileSection(),
+            buildDescriptionSection()
+          ],
         ),
       ),
+    );
+  }
+
+  AppBar buildAppBar() {
+    return AppBar(
+      leading: Builder(
+        builder: (context) => IconButton(
+          icon: Image.asset(
+            'assets/icon/menu.png',
+            height: 18,
+          ),
+          onPressed: () {
+            Scaffold.of(context).openDrawer();
+          },
+        ),
+      ),
+      elevation: 0,
+      backgroundColor: Color(0xffDBAC9A),
+      iconTheme: IconThemeData(color: Colors.black),
     );
   }
 
@@ -91,7 +85,38 @@ class _HomePageState extends State<HomePage> {
             CircleAvatar(
               backgroundColor: Colors.white,
               radius: 60,
-              backgroundImage: NetworkImage(getProfileImage()),
+              child: Image.network(getProfileImage()),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  SliverToBoxAdapter buildDescriptionSection() {
+    return SliverToBoxAdapter(
+      child: Container(
+        child: Column(
+          children: [
+            SizedBox(height: 16,),
+            Text(
+              "Kajornsak",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            Image.asset(
+              'assets/icon/setting.png',
+              height: 16,
+            ),
+            SizedBox(
+              height: 12,
+            ),
+            Text("Hi, Everyone. I'm a keebs lover"),
+            Text("let's find something yours!"),
+            SizedBox(
+              height: 32,
             )
           ],
         ),
@@ -101,14 +126,8 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildStaggeredList() {
     return SliverWaterfallFlow(
-      delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
-        return Container(
-          padding: EdgeInsets.all(8),
-          child: Image.network(
-            models[index].url,
-          ),
-        );
-      }, childCount: models.length),
+      delegate: SliverChildBuilderDelegate((BuildContext context, int index) {},
+          childCount: 0),
       gridDelegate: SliverWaterfallFlowDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         crossAxisSpacing: 24,
