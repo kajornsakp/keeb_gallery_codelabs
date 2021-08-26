@@ -74,32 +74,29 @@ class _HomePageState extends State<HomePage> {
 
   SliverToBoxAdapter buildProfileSection() {
     return SliverToBoxAdapter(
-              child: ClipRect(
-                child: Container(
-                  color: Color(0xffDBAC9A),
-                  child: Stack(
-                    alignment: Alignment.topCenter,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.all(30),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(24),
-                                topRight: Radius.circular(24))),
-                        margin: EdgeInsets.only(top: 60),
-                      ),
-                      CircleAvatar(
-                        backgroundColor: Colors.white,
-                        radius: 60,
-                        backgroundImage:
-                            NetworkImage(getProfileImage()),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            );
+      child: Container(
+        color: Color(0xffDBAC9A),
+        child: Stack(
+          alignment: Alignment.topCenter,
+          children: [
+            Container(
+              padding: EdgeInsets.all(30),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(24),
+                      topRight: Radius.circular(24))),
+              margin: EdgeInsets.only(top: 60),
+            ),
+            CircleAvatar(
+              backgroundColor: Colors.white,
+              radius: 60,
+              backgroundImage: NetworkImage(getProfileImage()),
+            )
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _buildStaggeredList() {
