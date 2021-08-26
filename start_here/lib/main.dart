@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:waterfall_flow/waterfall_flow.dart';
 
 void main() {
   runApp(MyApp());
@@ -30,58 +31,72 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        leading: Builder(
-          builder: (context) => IconButton(
-            icon: Image.asset(
-              'assets/icon/menu.png',
-              height: 18,
-            ),
-            onPressed: () {
-              Scaffold.of(context).openDrawer();
-            },
-          ),
-        ),
-        elevation: 0,
-        backgroundColor: Color(0xffDBAC9A),
-        iconTheme: IconThemeData(color: Colors.black),
-      ),
+      appBar: buildAppBar(),
       drawer: Drawer(
         child: Container(),
       ),
       body: SafeArea(
         child: CustomScrollView(
           slivers: [
-            SliverList(
-                delegate: SliverChildListDelegate([
-              Container(
-                child: Stack(
-                  alignment: Alignment.topCenter,
-                  children: [
-                    Container(
-                      height: 100,
-                      color: Color(0xffDBAC9A),
-                    ),
-                    Container(
-                        padding: EdgeInsets.all(24),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(24),
-                                topRight: Radius.circular(24))),
-                        margin: EdgeInsets.only(top: 60),
-                        child: Container() //TODO: Replace content here
-                    ),
-                    CircleAvatar(
-                      radius: 60,
-                      backgroundImage: AssetImage('assets/image/profile.png'),
-                    )
-                  ],
-                ),
-              )
-            ]))
           ],
         ),
+      ),
+    );
+  }
+
+  AppBar buildAppBar() {
+    return AppBar(
+      leading: Builder(
+        builder: (context) => IconButton(
+          icon: Image.asset(
+            'assets/icon/menu.png',
+            height: 18,
+          ),
+          onPressed: () {
+            Scaffold.of(context).openDrawer();
+          },
+        ),
+      ),
+      elevation: 0,
+      backgroundColor: Color(0xffDBAC9A),
+      iconTheme: IconThemeData(color: Colors.black),
+    );
+  }
+
+  SliverToBoxAdapter buildProfileSection() {
+    return SliverToBoxAdapter(
+      child: Container(
+        color: Color(0xffDBAC9A),
+        child: Stack(
+          alignment: Alignment.topCenter,
+          children: [
+            Container(
+              padding: EdgeInsets.all(30),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(24),
+                      topRight: Radius.circular(24))),
+              margin: EdgeInsets.only(top: 60),
+            ),
+            CircleAvatar(
+              backgroundColor: Colors.white,
+              radius: 60,
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildStaggeredList() {
+    return SliverWaterfallFlow(
+      delegate: SliverChildBuilderDelegate((BuildContext context, int index) {},
+          childCount: 0),
+      gridDelegate: SliverWaterfallFlowDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        crossAxisSpacing: 24,
+        mainAxisSpacing: 24,
       ),
     );
   }
